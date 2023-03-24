@@ -24,7 +24,7 @@ const val = () => {
 
   operacion = prompt("¿Que operacion desea hacer?").toLowerCase();
 
-  if (operacion != "compra" && operacion != "venta") {
+  if (operacion != "comprar" && operacion != "vender") {
     alert("Solo se podra cotizar compras o ventas de divisas");
     return;
   }
@@ -37,30 +37,30 @@ const convertidor = (operador) => {
   while (respuesta) {
     val();
 
-    if (divisa == "dolar" && operacion == "compra") {
+    if (divisa == "dolar" && operacion == "vender") {
       valor = parseInt(
-        prompt("Introduzca el monto de dolares que desae cambiar")
+        prompt("Introduzca el monto de dolares que desae vender")
       );
       resultado = valor * dolarCompra;
-      resp("$");
-    } else if (divisa == "dolar" && operacion == "venta") {
+      resp("Recibirá $");
+    } else if (divisa == "dolar" && operacion == "comprar") {
       valor = parseInt(
-        prompt("Introduzca el monto de pesos que desae cambiar")
+        prompt("Introduzca el monto de dolares que desae comprar")
       );
-      resultado = valor / dolarVenta;
-      resp("$USA");
-    } else if (divisa == "euro" && operacion == "compra") {
+      resultado = valor * dolarVenta;
+      resp("Deberá pagar $");
+    } else if (divisa == "euro" && operacion == "vender") {
       valor = parseInt(
-        prompt("Introduzca el monto de euros que desae cambiar")
+        prompt("Introduzca el monto de euros que desae vender")
       );
       resultado = valor * euroCompra;
-      resp("$");
-    } else if (divisa == "euro" && operacion == "venta") {
+      resp("Recibirá $");
+    } else if (divisa == "euro" && operacion == "comprar") {
       valor = parseInt(
-        prompt("Introduzca el monto de pesos que desae cambiar")
+        prompt("Introduzca el monto de euros que desae comprar")
       );
-      resultado = valor / euroVenta;
-      resp("€");
+      resultado = valor * euroVenta;
+      resp("Deberá pagar $");
     }
     respuesta = confirm("¿Desea hacer otro calculo?");
   }
