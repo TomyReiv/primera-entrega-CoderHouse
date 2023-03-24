@@ -15,14 +15,14 @@ const resp = (param) => {
 
 //validador
 const val = () => {
-  divisa = prompt("Que divisa desea cotizar (Dolares o euros)").toLowerCase();
+  divisa = prompt("¿Que divisa desea cotizar (Dolares o euros)?").toLowerCase();
 
   if (divisa != "dolar" && divisa != "euro") {
     alert("Solo se podra cotizar dolares o euros");
     return;
   }
 
-  operacion = prompt("Que operacion desea hacer").toLowerCase();
+  operacion = prompt("¿Que operacion desea hacer?").toLowerCase();
 
   if (operacion != "compra" && operacion != "venta") {
     alert("Solo se podra cotizar compras o ventas de divisas");
