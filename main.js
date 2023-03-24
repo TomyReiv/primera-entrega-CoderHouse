@@ -15,7 +15,7 @@ const resp = (param) => {
 
 //validador
 const val = () => {
-  divisa = prompt("Que divisa desea cotizar").toLowerCase();
+  divisa = prompt("Que divisa desea cotizar (Dolares o euros)").toLowerCase();
 
   if (divisa != "dolar" && divisa != "euro") {
     alert("Solo se podra cotizar dolares o euros");
@@ -62,6 +62,6 @@ const convertidor = (operador) => {
       resultado = valor / euroVenta;
       resp("€");
     }
-    respuesta = confirm("Desea hacer otro calculo");
+    respuesta = confirm("¿Desea hacer otro calculo?");
   }
 };
