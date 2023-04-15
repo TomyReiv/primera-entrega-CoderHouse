@@ -1,12 +1,22 @@
 //Variables
-const dolarCompra = 390;
-const dolarVenta = 394;
-const euroCompra = 419;
-const euroVenta = 424;
+
 let resultado;
 let divisa;
 let operacion;
 let valor;
+const cotizador = document.querySelector('#Cotizador');
+
+const operaciones = ['comprar', 'vender'];
+
+const dolar = {
+  compra: 390,
+  venta: 394
+}
+
+const euro = {
+  compra: 419,
+  venta: 424
+}
 
 //Alert
 const resp = (param) => {
@@ -14,17 +24,17 @@ const resp = (param) => {
 };
 
 //validador
-const val = () => {
-  divisa = prompt("¿Que divisa desea cotizar (Dolares o euros)?").toLowerCase().trim();
+const validar = () => {
+  divisa = prompt("¿Que divisa desea cotizar (Dolar o euro)?").toLowerCase().trim();
 
   if (divisa != "dolar" && divisa != "euro") {
     alert("Solo se podra cotizar dolares o euros");
     return;
   }
 
-  operacion = prompt("¿Que operacion desea hacer?").toLowerCase().trim();
+  operacion = prompt("¿Desea comprar o vender?").toLowerCase().trim();
 
-  if (operacion != "comprar" && operacion != "vender") {
+  if (!operaciones.includes(operacion)) {
     alert("Solo se podra cotizar compras o ventas de divisas");
     return;
   }
@@ -49,33 +59,38 @@ const convertidor = (operador) => {
   let respuesta = true | operador;
 
   while (respuesta) {
-    val();
+    validar();
 
     if (divisa == "dolar" && operacion == "vender") {
-      ingresarValor("Introduzca el monto de dolares que desae vender");
+      ingresarValor("Introduzca el monto de dolares que desea vender");
       if (!valNumero(valor)) {
-        resultado = valor * dolarCompra;
+        resultado = valor * dolar.compra;
         resp("Recibirá $");
       }
     } else if (divisa == "dolar" && operacion == "comprar") {
-      ingresarValor("Introduzca el monto de dolares que desae comprar");
+      ingresarValor("Introduzca el monto de dolares que desea comprar");
       if (!valNumero(valor)) {
-        resultado = valor * dolarVenta;
+        resultado = valor * dolar.venta;
         resp("Deberá pagar $");
       }
     } else if (divisa == "euro" && operacion == "vender") {
-      ingresarValor("Introduzca el monto de euros que desae vender");
+      ingresarValor("Introduzca el monto de euros que desea vender");
       if (!valNumero(valor)) {
-        resultado = valor * euroCompra;
+        resultado = valor * euro.compra;
         resp("Recibirá $");
       }
     } else if (divisa == "euro" && operacion == "comprar") {
-      ingresarValor("Introduzca el monto de euros que desae comprar");
+      ingresarValor("Introduzca el monto de euros que desea comprar");
       if (!valNumero(valor)) {
-        resultado = valor * euroVenta;
+        resultado = valor * euro.venta;
         resp("Deberá pagar $");
       }
     }
     respuesta = confirm("¿Desea hacer otro calculo?");
   }
 };
+
+//Evento click
+cotizador.addEventListener('click', () =>{
+  convertidor(true);
+})
