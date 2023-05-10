@@ -1,55 +1,24 @@
+
+
 //Variables
 let importe = document.querySelector("#importe");
+let darkMode = false;
+let resultado;
 
 const cotizador = document.querySelector("#Cotizador");
 const error = document.querySelector("#error");
 const errorTotal = document.querySelector("#errorTotal");
 const darkModeButton = document.querySelector("#darkMode");
-let darkMode = false;
 const body = document.querySelector("body");
 const form = document.querySelector("#form");
 const respMensaje = document.querySelector("#resultado");
-let resultado;
 const storHistorial = JSON.parse(localStorage.getItem("Historial"));
 const historial = {
   importe: storHistorial?.importe || 0,
-  desde: storHistorial?.desde || "",
-  hasta: storHistorial?.hasta || "",
+  base: storHistorial?.base || "",
+  currencies: storHistorial?.currencies || "",
 };
 importe.value = historial.importe;
-
-const Monedas = {
-  peso: {
-    dolar: 0.00453,
-    euro: 0.00412,
-    real: 0.02289,
-    libra: 0.00364,
-  },
-  dolar: {
-    peso: 220.509,
-    euro: 0.90795,
-    real: 5.04665,
-    libra: 0.80357,
-  },
-  real: {
-    peso: 43.6637,
-    euro: 0.17979,
-    dolar: 19801,
-    libra: 15912,
-  },
-  libra: {
-    peso: 274.37,
-    euro: 1.12978,
-    real: 6.27932,
-    dolar: 1.24425,
-  },
-  euro: {
-    peso: 242.829,
-    libra: 0.88496,
-    real: 5.55747,
-    dolar: 1.10122,
-  },
-};
 
 //Respuesta
 const resp = (param, parm2) => {
@@ -81,81 +50,59 @@ const valNumero = (param) => {
 };
 
 //Funcion general
-//Evento click
+//Api Divisas
+
 cotizador.addEventListener("click", (e) => {
   e.preventDefault();
 
-  let importe = document.querySelector("#importe").value;
-  let desde = document.querySelector("#de").value;
-  let hasta = document.querySelector("#a").value;
+  let valueData;
+  let resRedondeado;
+  const currencies = document.querySelector("#a").value;
+  const base = document.querySelector("#de").value;
+  const importe = document.querySelector("#importe").value;
 
-  validar(importe, desde, hasta);
+  validar(importe, base, currencies);
   valNumero(importe);
 
-
-  const conversionRates = {
-    GBP: {
-      ARS: Monedas.libra.peso,
-      EUR: Monedas.libra.euro,
-      USD: Monedas.libra.dolar,
-      BRL: Monedas.libra.real
-    },
-    ARS: {
-      GBP: Monedas.peso.libra,
-      EUR: Monedas.peso.euro,
-      USD: Monedas.peso.dolar,
-      BRL: Monedas.peso.real
-    },
-    USD: {
-      ARS: Monedas.dolar.peso,
-      EUR: Monedas.dolar.euro,
-      GBP: Monedas.dolar.libra,
-      BRL: Monedas.dolar.real
-    },
-    EUR: {
-      ARS: Monedas.euro.peso,
-      GBP: Monedas.euro.libra,
-      USD: Monedas.euro.dolar,
-      BRL: Monedas.euro.real
-    },
-    BRL: {
-      ARS: Monedas.real.peso,
-      EUR: Monedas.real.euro,
-      USD: Monedas.real.dolar,
-      GBP: Monedas.real.libra
-    }
-  };
-  
-  if (desde === "GBP" && conversionRates.GBP.hasOwnProperty(hasta)) {
-    resultado = importe * conversionRates.GBP[hasta];
-  }
-  if (desde === "USD" && conversionRates.USD.hasOwnProperty(hasta)) {
-    resultado = importe * conversionRates.USD[hasta];
-  }
-  if (desde === "ARS" && conversionRates.ARS.hasOwnProperty(hasta)) {
-    resultado = importe * conversionRates.ARS[hasta];
-  }
-  if (desde === "EUR" && conversionRates.EUR.hasOwnProperty(hasta)) {
-    resultado = importe * conversionRates.EUR[hasta];
-  }
-  if (desde === "BRL" && conversionRates.BRL.hasOwnProperty(hasta)) {
-    resultado = importe * conversionRates.BRL[hasta];
-  }
-
-
-  if (desde === hasta) {
+  if (base === currencies) {
     resultado = importe;
   }
 
-  let resRedondeado = (Math.floor(resultado * 100) / 100).toFixed(2);
+  if (base === "ARS" || currencies === "ARS") {
+    swal({
+      title: "Cuidado",
+      text: "Los valores son sin los impuestos, consulte los impuestos oficiales a la hora de hacer la conversion",
+      icon: "warning",
+      button: "Cancelar",
+    });
+  }
+
+  const API_KEY = "noUgT4wQTa8SIblN5fezTBC8PTd5eoulnhdNsTTf";
+  const url = `https://api.currencyapi.com/v3/latest?apikey=${API_KEY}&currencies=${currencies}&base_currency=${base}`;
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      for (var key in data.data) {
+        valueData = data.data[key].value;
+      }
+      resultado = importe * valueData;
+      resRedondeado = (Math.floor(resultado * 100) / 100).toFixed(2);
+      resp(currencies, resRedondeado);
+    })
+    .catch((error) => {
+      swal({
+        title: error,
+        text: "Intente nuevamente",
+        icon: "danger",
+        button: "Cancelar",
+      });
+    });
 
   historial.importe = importe;
-  historial.desde = desde;
-  historial.hasta = hasta;
-
+  historial.base = base;
+  historial.currencies = currencies;
   const storage = localStorage.setItem("Historial", JSON.stringify(historial));
-
-  resp(hasta, resRedondeado);
 });
 
 //darkMode
@@ -169,3 +116,27 @@ darkModeButton.addEventListener("click", () => {
     : form.classList.remove("darkMode");
   darkMode = !darkMode;
 });
+
+
+const tosty = (frase, destination, avatar, duration) => {
+  setTimeout( () => {
+    Toastify({
+    text: frase,
+    duration: 8000,
+    destination: destination,
+    newWindow: true,
+    close: true,
+    gravity: "bottom", 
+    position: "left", 
+    stopOnFocus: true,
+    style: {
+      background: "linear-gradient(to right, #00b09b, #96c93d)",
+    },
+    avatar: avatar,
+    onClick: function(){}
+  }).showToast();
+  }, duration);
+}
+
+tosty("Mi github", "https://github.com/TomyReiv", 'github.svg', 5000);
+tosty("Mi Linkedin" ,"https://www.linkedin.com/in/tomas-rave-38794025a/", 'linkedin.svg', 7000);

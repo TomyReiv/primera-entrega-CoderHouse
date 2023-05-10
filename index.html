@@ -11,6 +11,11 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -33,7 +38,9 @@
       <div class="background-effect">
         <div class="bubble"></div>
         <div class="bubble"></div>
-        <div class="superman"><img src="superman-removebg-preview.png" alt=""></div>
+        <div class="superman">
+          <img src="superman-removebg-preview.png" alt="" />
+        </div>
       </div>
       <div class="container">
         <h1 class="mt-5 text-muted">Cotizador de divisas</h1>
@@ -57,28 +64,14 @@
         <div class="form-group">
           <label for="de">De:</label>
           <div class="input-container">
-            <select id="de" name="de" required>
-              <option value="">Seleccione una divisa</option>
-              <option value="USD">Dólares estadounidenses (USD)</option>
-              <option value="EUR">Euros (EUR)</option>
-              <option value="ARS">Peso argentino (ARS)</option>
-              <option value="GBP">Libras esterlinas (GBP)</option>
-              <option value="BRL">Real brasilero (BRL)</option>
-            </select>
+            <select id="de" name="de" required></select>
           </div>
         </div>
 
         <div class="form-group">
           <label for="a">A:</label>
           <div class="input-container">
-            <select id="a" name="a" required>
-              <option value="">Seleccione una divisa</option>
-              <option value="USD">Dólares estadounidenses (USD)</option>
-              <option value="EUR">Euros (EUR)</option>
-              <option value="ARS">Peso argentino (ARS)</option>
-              <option value="GBP">Libras esterlinas (GBP)</option>
-              <option value="BRL">Real brasilero (BRL)</option>
-            </select>
+            <select id="a" name="a" required></select>
           </div>
         </div>
 
@@ -93,11 +86,18 @@
       </form>
     </main>
 
-    <script src="main.js"></script>
+  
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script src="main.js"></script>
+    <script src="currencies.js"></script>
   </body>
 </html>
