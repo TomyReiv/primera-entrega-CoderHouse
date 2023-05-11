@@ -1,4 +1,4 @@
 # primera-entrega-CoderHouse
-Trabajo con operadores y bucles.
+Trabajo final para el curso javaScript de Coderhouse.
 
-Utilice un boton para iniciar el bucle, luego o se puede seguir cotizando con el confirm o volver a tocar el boton.
+Uso de una API para la app de convertidor de divisas. Uso de fetch y un archivo json para las diferentes divisas.
