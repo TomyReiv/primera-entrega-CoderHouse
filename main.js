@@ -140,3 +140,5 @@ const tosty = (frase, destination, avatar, duration) => {
 
 tosty("Mi github", "https://github.com/TomyReiv", 'github.svg', 5000);
 tosty("Mi Linkedin" ,"https://www.linkedin.com/in/tomas-rave-38794025a/", 'linkedin.svg', 7000);
+
+
